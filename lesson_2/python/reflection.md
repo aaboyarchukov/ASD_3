@@ -24,8 +24,15 @@
 
 3. Сортировка вставками
 
+```
+алгоритм:
+- проходим от i-го элемента до n-1 и вставляем его на нужное место в предыдущей последовательности, то есть между двумя объектами с сохранением упорядоченности
+- повторяем алгоритм до тех пор, пока не понадобится вставлять элементы в нужные места
+```
+
 Данные алгоритмы сортировки являются базовыми, так как применяют простые и неоптимизированные алгоритмы для сортировки структуры, из-за этого сложность данных алгоритмов квадратичная $O^2$ в худшем случае.
 
+**Важность использования эффективных алгоритмов** заключается в том, что мы можем оптимизировать работу или увеличить производительность алгоритма даже на железе, которое будет сильно обрезанным в плане ресурсов.
 ## Задания
 
 1. Реализуйте функцию для одного шага сортировки выбором, которая получает на вход массив целых чисел (передаётся по ссылке) и номер элемента i (i >= 0), и меняет в этом массиве i-й элемент местами с минимальным элементом в оставшейся части массива, начиная с элемента i+1.
@@ -70,3 +77,38 @@ def BubbleSortStep(array):
     
     return amount_switches == default_switches
 ```
+
+3. Реализуйте предварительный алгоритм для сортировки вставками с дополнительным параметром -- шагом сортировки - реализуйте функцию для одного шага сортировки вставкой (по возрастанию), которая получает на вход массив целых чисел (передаётся по ссылке), размер шага (>= 1) и номер элемента i (i >= 0), с которого выполняется один шаг сортировки.
+
+```python
+# t = O(n // step), where n = len(array) 
+# mem = O(1)
+def find_position(array, start, stop, step):
+    init_pos = start
+    while start > stop and array[start - step] > array[init_pos]:
+        start -= step
+
+    return start
+
+# t = O(n // step), where n = len(array) 
+# mem = O(1)
+def insert_at_position(array, position_from, position_to, step):
+    target_value = array[position_from]
+    target_position = position_to
+
+    while position_to < position_from:
+        array[position_from] = array[position_from - step]
+        position_from -= step
+    
+    array[target_position] = target_value
+    print(array)
+
+# t = O(((n - i) // step) ^ 2), where n = len(array) 
+# mem = O(1)
+def InsertionSortStep(array, step, i):
+    for indx in range(i + step, len(array), step):
+        target_position = find_position(array, indx, i, step)
+        insert_at_position(array, indx, target_position, step)
+```
+
+На данном занятии мы познакомились с основными видами базовых сортировок.
