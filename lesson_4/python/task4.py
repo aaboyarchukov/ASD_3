@@ -1,3 +1,5 @@
+# t = O(n), n = len(M)
+# mem = O(1)
 def ArrayChunk(M):
     size = len(M)
     if size < 2:
