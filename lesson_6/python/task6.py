@@ -44,8 +44,12 @@ def QuickSortTailOptimization(array : list[int], left : int, right : int):
     if size < 2:
         return
 
-    if left < right:
+    while left < right:
         basic_indx = ArrayChunk(array, left, right)
 
-        # QuickSortTailOptimization(array, left, basic_indx-1)
-        # QuickSortTailOptimization(array, basic_indx+1, right)
+        if basic_indx - left < right - basic_indx: # если опорный указатель больше выпал а левую сторону -> идем влево
+            QuickSortTailOptimization(array, left, basic_indx-1)
+            left = basic_indx + 1 # обновляем, чтобы потом уйти в правую часть
+        else: # иначе вправо
+            QuickSortTailOptimization(array, basic_indx+1, right)
+            right = basic_indx - 1 # здесь чтобы уйти в левую часть
