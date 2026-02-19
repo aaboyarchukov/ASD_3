@@ -2,8 +2,7 @@ import unittest
 from task9 import HeapSort
 
 def build_heap_sort(array) -> HeapSort:
-    heap = HeapSort()
-    heap.HeapSort(array)
+    heap = HeapSort(array)
 
     return heap
 

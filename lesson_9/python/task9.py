@@ -105,18 +105,17 @@ class Heap:
 
 
 class HeapSort:
-    def __init__(self):
+
+    # mem = O(1), t = O(n*log(n))
+    def __init__(self, array):
         self.HeapObject = Heap()
+        self.HeapObject.MakeHeap(array, self.__calculate_depth(len(array)))
     
     def __calculate_depth(self, size):
         base = 2
         while base < size:
             base **= 2
         return base
-    
-    # mem = O(1), t = O(n*log(n))
-    def HeapSort(self, array):
-        self.HeapObject.MakeHeap(array, self.__calculate_depth(len(array)))
     
     # mem = O(1), t = O(log(n))
     def GetNextMax(self) -> int:
