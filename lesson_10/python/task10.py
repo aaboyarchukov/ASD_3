@@ -9,6 +9,8 @@ class ksort:
         self.__A_POSITIONING = 100
         self.__M_POSITIONING = 10
         self.__N_POSITIONING = 1
+        self.__INVALID_RESULT = -1
+        self.__VALID_ROW_LEN = 3
 
         self.__AMOUNT_VALUES = 800
         self.items = [None] * self.__AMOUNT_VALUES
@@ -16,13 +18,13 @@ class ksort:
     # mem = O(1), t = O(1)
     def hash(self, row : str) -> int:
         if not self.valid_row(row):
-            return -1
+            return self.__INVALID_RESULT
         
         return sum([(ord(row[0]) - ord('a')) * self.__A_POSITIONING, int(row[1]) * self.__M_POSITIONING, int(row[2]) * self.__N_POSITIONING])
     
     # mem = O(1), t = O(1)
     def valid_row(self, row : str) -> bool:
-        if len(row) != 3:
+        if len(row) != self.__VALID_ROW_LEN:
             return False
         
         valid_letters, valid_digits = set('abcdefgh'), set('0123456789')  
@@ -36,7 +38,7 @@ class ksort:
     # mem = O(1), t = O(1)
     def add(self, s : str) -> bool:
         hash = self.hash(s)
-        if hash == -1:
+        if hash == self.__INVALID_RESULT:
             return False
         
         self.items[hash] = s
