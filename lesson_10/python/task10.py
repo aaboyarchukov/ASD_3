@@ -6,9 +6,9 @@ class ksort:
     # hash_M = max_int_digit -> 9
     # 799 indexes -> 800 values
     def __init__(self):
-        self.___A_POSITIONING = 100
-        self.___M_POSITIONING = 10
-        self.___N_POSITIONING = 1
+        self.__A_POSITIONING = 100
+        self.__M_POSITIONING = 10
+        self.__N_POSITIONING = 1
 
         self.__AMOUNT_VALUES = 800
         self.items = [None] * self.__AMOUNT_VALUES
@@ -18,7 +18,7 @@ class ksort:
         if not self.valid_row(row):
             return -1
         
-        return sum([(ord(row[0]) - ord('a')) * self.___A_POSITIONING, int(row[1]) * self.___M_POSITIONING, int(row[2]) * self.___N_POSITIONING])
+        return sum([(ord(row[0]) - ord('a')) * self.__A_POSITIONING, int(row[1]) * self.__M_POSITIONING, int(row[2]) * self.__N_POSITIONING])
     
     # mem = O(1), t = O(1)
     def valid_row(self, row : str) -> bool:
