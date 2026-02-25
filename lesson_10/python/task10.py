@@ -14,6 +14,8 @@ class ksort:
 
         self.__AMOUNT_VALUES = 800
         self.items = [None] * self.__AMOUNT_VALUES
+
+        self.valid_letters, self.valid_digits = set('abcdefgh'), set('0123456789') 
     
     # mem = O(1), t = O(1)
     def hash(self, row : str) -> int:
@@ -25,11 +27,9 @@ class ksort:
     # mem = O(1), t = O(1)
     def valid_row(self, row : str) -> bool:
         if len(row) != self.__VALID_ROW_LEN:
-            return False
+            return False 
         
-        valid_letters, valid_digits = set('abcdefgh'), set('0123456789')  
-        
-        return row[0] in valid_letters and row[1] in valid_digits and row[2] in valid_digits 
+        return row[0] in self.valid_letters and row[1] in self.valid_digits and row[2] in self.valid_digits
     
     # mem = O(1), t = O(1)
     def index(self, s : str) -> int:
