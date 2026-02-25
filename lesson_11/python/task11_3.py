@@ -105,11 +105,11 @@ class TestBinarySearchStep(unittest.TestCase):
                 )
 
                 self.assertEqual(
-                    [setup_binary_search.left, setup_binary_search.right], case["init_pointers"],
+                    [setup_binary_search.Left, setup_binary_search.Right], case["init_pointers"],
                     msg=(
                         f"FAIL: Неверное начальное состояние указателей.\n"
                         f"Ожидалось: {case['init_pointers']}\n"
-                        f"Получено:  {[setup_binary_search.left, setup_binary_search.right]}"
+                        f"Получено:  {[setup_binary_search.Left, setup_binary_search.Right]}"
                     )
                 )
 
@@ -129,11 +129,11 @@ class TestBinarySearchStep(unittest.TestCase):
                     )
                     
                     self.assertEqual(
-                        [setup_binary_search.left, setup_binary_search.right], case["bounds_pointers"][i],
+                        [setup_binary_search.Left, setup_binary_search.Right], case["bounds_pointers"][i],
                         msg=(
                             f"FAIL: Неверное изменение указателей.\n"
                             f"Ожидалось: {case['bounds_pointers'][i]}\n"
-                            f"Получено:  {[setup_binary_search.left, setup_binary_search.right]}"
+                            f"Получено:  {[setup_binary_search.Left, setup_binary_search.Right]}"
                         )
                     )
 

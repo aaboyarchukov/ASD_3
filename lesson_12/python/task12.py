@@ -23,22 +23,22 @@ class BinarySearch:
 
     def __init__(self, array):
         self.array = array
-        self.Left = 0
-        self.Right = 0
+        self.left = 0
+        self.right = 0
         
         if len(array) == 0:
             self.__step_state = BinarySearch.__FAIL
             return
         
         self.__step_state = BinarySearch.__SEARCH
-        self.Right = len(array) - 1
+        self.right = len(array) - 1
     
     def GetState(self):
         return self.__step_state
     
     # mem = O(1), t = O(1)
     def __check_element_with_possible_fail(self, target) -> str:
-        if self.array[self.Left] == target or self.array[self.Right] == target:
+        if self.array[self.left] == target or self.array[self.right] == target:
             return BinarySearch.__SUCCESS
         
         return BinarySearch.__FAIL
@@ -48,10 +48,10 @@ class BinarySearch:
         if self.__step_state != BinarySearch.__SEARCH:
             return
         
-        middle = (self.Left + self.Right) // 2
+        middle = (self.left + self.right) // 2
         target = self.array[middle]
         
-        if self.Right - self.Left == 1 or self.Right == self.Left:
+        if self.right - self.left == 1 or self.right == self.left:
             self.__step_state = self.__check_element_with_possible_fail(n)
             return
         
@@ -60,11 +60,14 @@ class BinarySearch:
             return
         
         if n < target:
-            self.Right = middle - 1
+            self.right = middle - 1
         
         if n > target:
-            self.Left = middle + 1
+            self.left = middle + 1
         
     # mem = O(1), t = O(1)
     def GetResult(self):
         return self.__states_to_result[self.__step_state]
+    
+    def GallopingSearch(self, array, n) -> bool:
+        return
