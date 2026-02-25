@@ -36,12 +36,14 @@ class BinarySearch:
     def GetState(self):
         return self.__step_state
     
+    # mem = O(1), t = O(1)
     def __check_element_with_possible_fail(self, target) -> str:
         if self.array[self.left] == target or self.array[self.right] == target:
             return BinarySearch.__SUCCESS
         
         return BinarySearch.__FAIL
     
+    # mem = O(1), t = O(1)
     def Step(self, n):
         if self.__step_state != BinarySearch.__SEARCH:
             return
@@ -63,6 +65,6 @@ class BinarySearch:
         if n > target:
             self.left = middle + 1
         
-        
+    # mem = O(1), t = O(1)
     def GetResult(self):
         return self.__states_to_result[self.__step_state]
