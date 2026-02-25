@@ -7,63 +7,132 @@ def setup(array):
 class TestBinarySearchStep(unittest.TestCase):
     def test_step(self):
         cases = [
-            ["empty array", [], 5, 3, [[0, -1], [0, -1], [0, -1], [0, -1]], [BinarySearch.get_search(), BinarySearch.get_fail(), BinarySearch.get_fail(), BinarySearch.get_fail()]],
-            ["one element array", [1], 1, 3, [[0, 0], [0, 0], [0, 0], [0, 0]], [BinarySearch.get_search(), BinarySearch.get_success(), BinarySearch.get_success(), BinarySearch.get_success()]],
-            ["odd array not enough tries", [1, 2, 3, 4, 5], 5, 1, [[0, 4], [3, 4]], [BinarySearch.get_search(), BinarySearch.get_search()]],
-            ["odd array enough tries", [1, 2, 3, 4, 5], 5, 3, [[0, 4], [3, 4], [3, 3], [3, 3]], [BinarySearch.get_search(), BinarySearch.get_search(), BinarySearch.get_success()]],
-            ["odd array enough tries with fail", [1, 2, 3, 4, 5], -1, 3, [[0, 4], [0, 1], [0, 0], [0, 0]], [BinarySearch.get_search(), BinarySearch.get_search(), BinarySearch.get_fail(), BinarySearch.get_fail()]],
-            ["even array not enough tries", [1, 2, 3, 4, 5, 6], 4, 2, [[0, 5], [3, 5], [3, 4]], [BinarySearch.get_search(), BinarySearch.get_search(), BinarySearch.get_search()]],
-            ["even array enough tries", [1, 2, 3, 4, 5, 6], 4, 4, [[0, 5], [3, 5], [3, 4], [3, 3], [3, 3]], [BinarySearch.get_search(), BinarySearch.get_search(), BinarySearch.get_search(), BinarySearch.get_success(), BinarySearch.get_success()]],
-            ["even array enough tries with fail", [1, 2, 3, 4, 5, 6], -1, 4, [[0, 5], [0, 1], [0, 0], [0, 0], [0, 0]], [BinarySearch.get_search(), BinarySearch.get_search(), BinarySearch.get_fail(), BinarySearch.get_fail(), BinarySearch.get_fail()]],
+            {
+                "name": "empty array",
+                "array": [],
+                "target": 5,
+                "tries": 3,
+                "init_pointers": [0, 0],
+                "init_state": BinarySearch.get_fail(),
+                "bounds_pointers": [[0, 0], [0, 0], [0, 0]],
+                "bounds_states": [BinarySearch.get_fail(), BinarySearch.get_fail(), BinarySearch.get_fail()]
+            },
+            {
+                "name": "one element array",
+                "array": [1],
+                "target": 1,
+                "tries": 3,
+                "init_pointers": [0, 0],
+                "init_state": BinarySearch.get_search(),
+                "bounds_pointers": [[0, 0], [0, 0], [0, 0]],
+                "bounds_states": [BinarySearch.get_success(), BinarySearch.get_success(), BinarySearch.get_success()]
+            },
+            {
+                "name": "odd array not enough tries",
+                "array": [1, 2, 3, 4, 5],
+                "target": 5,
+                "tries": 1,
+                "init_pointers": [0, 4],
+                "init_state": BinarySearch.get_search(),
+                "bounds_pointers": [[3, 4]],
+                "bounds_states": [BinarySearch.get_search()]
+            },
+            {
+                "name": "odd array enough tries",
+                "array": [1, 2, 3, 4, 5],
+                "target": 5,
+                "tries": 3,
+                "init_pointers": [0, 4],
+                "init_state": BinarySearch.get_search(),
+                "bounds_pointers": [[3, 4], [3, 4], [3, 4]],
+                "bounds_states": [BinarySearch.get_search(), BinarySearch.get_success(), BinarySearch.get_success()]
+            },
+            {
+                "name": "odd array enough tries with fail",
+                "array": [1, 2, 3, 4, 5],
+                "target": -1,
+                "tries": 4,
+                "init_pointers": [0, 4],
+                "init_state": BinarySearch.get_search(),
+                "bounds_pointers": [[0, 1], [0, 1], [0, 1], [0, 1]],
+                "bounds_states": [BinarySearch.get_search(), BinarySearch.get_fail(), BinarySearch.get_fail(), BinarySearch.get_fail()]
+            },
+            {
+                "name": "even array not enough tries",
+                "array": [1, 2, 3, 4, 5, 6],
+                "target": 4,
+                "tries": 2,
+                "init_pointers": [0, 5],
+                "init_state": BinarySearch.get_search(),
+                "bounds_pointers": [[3, 5], [3, 3]],
+                "bounds_states": [BinarySearch.get_search(), BinarySearch.get_search()]
+            },
+            {
+                "name": "even array enough tries",
+                "array": [1, 2, 3, 4, 5, 6],
+                "target": 4,
+                "tries": 4,
+                "init_pointers": [0, 5],
+                "init_state": BinarySearch.get_search(),
+                "bounds_pointers": [[3, 5], [3, 3], [3, 3], [3, 3]],
+                "bounds_states": [BinarySearch.get_search(), BinarySearch.get_search(), BinarySearch.get_success(), BinarySearch.get_success()]
+            },
+            {
+                "name": "even array enough tries with fail",
+                "array": [1, 2, 3, 4, 5, 6],
+                "target": -1,
+                "tries": 4,
+                "init_pointers": [0, 5],
+                "init_state": BinarySearch.get_search(),
+                "bounds_pointers": [[0, 1], [0, 1], [0, 1], [0, 1]],
+                "bounds_states": [BinarySearch.get_search(), BinarySearch.get_fail(), BinarySearch.get_fail(), BinarySearch.get_fail()]
+            },
         ]
 
-        for name, init_array, target_element, tries, pointers_states, search_step_states in cases:
-                with self.subTest(name=name, init_array=init_array, target_element=target_element):
-                    setup_binary_search = setup(init_array)
-                    
-                    for i in range(tries):
-                        target_state = search_step_states[i]
-                        state_now = setup_binary_search.GetState()
+        for case in cases:
+            with self.subTest(name=case["name"], init_array=case["array"], target_element=case["target"]):
+                setup_binary_search = setup(case["array"])
+                
+                # проверка начальных состояний указателей
+                # и состояние поиска
+                self.assertEqual(
+                    setup_binary_search.GetState(), case["init_state"],
+                    msg=(
+                        f"FAIL: Неверное начальное состояние.\n"
+                        f"Ожидалось: {case['init_state']}\n"
+                        f"Получено:  {setup_binary_search.GetState()}"
+                    )
+                )
 
-                        # проверку делаем до шага поиска
-                        # чтобы проверить начальное состояние
-                        self.assertEqual(
-                            state_now, target_state,
-                            msg=(
-                                f"FAIL: Неверное изменение состояний.\n"
-                                f"Ожидалось: {target_state}\n"
-                                f"Получено:  {state_now}"
-                            )
-                        )
+                self.assertEqual(
+                    [setup_binary_search.left, setup_binary_search.right], case["init_pointers"],
+                    msg=(
+                        f"FAIL: Неверное начальное состояние указателей.\n"
+                        f"Ожидалось: {case['init_pointers']}\n"
+                        f"Получено:  {[setup_binary_search.left, setup_binary_search.right]}"
+                    )
+                )
 
-                        # проверку делаем до шага поиска
-                        # чтобы проверить начальное состояние
-                        self.assertEqual(
-                            [setup_binary_search.left, setup_binary_search.right], pointers_states[i],
-                            msg=(
-                                f"FAIL: Неверное изменение указателей.\n"
-                                f"Ожидалось: {pointers_states[i]}\n"
-                                f"Получено:  {[setup_binary_search.left, setup_binary_search.right]}"
-                            )
-                        )
+                for i in range(case["tries"]):
+                    setup_binary_search.Step(case["target"])
 
-                        setup_binary_search.Step(target_element)
-                    
-                    # проверка на последнее изменение при шаге поиска
+                    target_state = case["bounds_states"][i]
+                    state_now = setup_binary_search.GetState()
+
                     self.assertEqual(
-                        setup_binary_search.GetState(), search_step_states[-1],
+                        state_now, target_state,
                         msg=(
                             f"FAIL: Неверное изменение состояний.\n"
                             f"Ожидалось: {target_state}\n"
                             f"Получено:  {state_now}"
                         )
                     )
-
+                    
                     self.assertEqual(
-                        [setup_binary_search.left, setup_binary_search.right], pointers_states[-1],
+                        [setup_binary_search.left, setup_binary_search.right], case["bounds_pointers"][i],
                         msg=(
                             f"FAIL: Неверное изменение указателей.\n"
-                            f"Ожидалось: {pointers_states[-1]}\n"
+                            f"Ожидалось: {case['bounds_pointers'][i]}\n"
                             f"Получено:  {[setup_binary_search.left, setup_binary_search.right]}"
                         )
                     )

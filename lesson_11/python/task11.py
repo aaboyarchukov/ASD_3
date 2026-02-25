@@ -22,37 +22,47 @@ class BinarySearch:
         return BinarySearch.__SUCCESS
 
     def __init__(self, array):
-        self.__step_state = BinarySearch.get_search()
         self.array = array
         self.left = 0
+        self.right = 0
+        
+        if len(array) == 0:
+            self.__step_state = BinarySearch.__FAIL
+            return
+        
+        self.__step_state = BinarySearch.__SEARCH
         self.right = len(array) - 1
     
     def GetState(self):
         return self.__step_state
     
+    def __check_element_with_possible_fail(self, target) -> str:
+        if self.array[self.left] == target or self.array[self.right] == target:
+            return BinarySearch.__SUCCESS
+        
+        return BinarySearch.__FAIL
+    
     def Step(self, n):
-        if len(self.array) == 0:
-            self.__step_state = BinarySearch.__FAIL
+        if self.__step_state != BinarySearch.__SEARCH:
             return
         
         middle = (self.left + self.right) // 2
         target = self.array[middle]
-
-        if self.array[middle] == n:
+        
+        if self.right - self.left == 1 or self.right == self.left:
+            self.__step_state = self.__check_element_with_possible_fail(n)
+            return
+        
+        if target == n:
             self.__step_state = BinarySearch.__SUCCESS
             return
         
-        if self.left == self.right:
-            self.__step_state = BinarySearch.__FAIL
-            return
-        
-        if target >= n:
+        if n < target:
             self.right = middle - 1
         
-        if target < n:
+        if n > target:
             self.left = middle + 1
-
         
-
+        
     def GetResult(self):
         return self.__states_to_result[self.__step_state]
