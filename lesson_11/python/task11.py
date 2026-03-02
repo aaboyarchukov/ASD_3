@@ -51,10 +51,6 @@ class BinarySearch:
         middle = (self.Left + self.Right) // 2
         target = self.array[middle]
         
-        if self.Right - self.Left == 1 or self.Right == self.Left:
-            self.__step_state = self.__check_element_with_possible_fail(n)
-            return
-        
         if target == n:
             self.__step_state = BinarySearch.__SUCCESS
             return
@@ -64,6 +60,10 @@ class BinarySearch:
         
         if n > target:
             self.Left = middle + 1
+        
+        if abs(self.Right - self.Left) <= 1:
+            self.__step_state = self.__check_element_with_possible_fail(n)
+            return
         
     # mem = O(1), t = O(1)
     def GetResult(self):

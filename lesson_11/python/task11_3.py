@@ -31,7 +31,7 @@ class TestBinarySearchStep(unittest.TestCase):
                 "name": "odd array not enough tries",
                 "array": [1, 2, 3, 4, 5],
                 "target": 5,
-                "tries": 1,
+                "tries": 0,
                 "init_pointers": [0, 4],
                 "init_state": BinarySearch.get_search(),
                 "bounds_pointers": [[3, 4]],
@@ -45,7 +45,7 @@ class TestBinarySearchStep(unittest.TestCase):
                 "init_pointers": [0, 4],
                 "init_state": BinarySearch.get_search(),
                 "bounds_pointers": [[3, 4], [3, 4], [3, 4]],
-                "bounds_states": [BinarySearch.get_search(), BinarySearch.get_success(), BinarySearch.get_success()]
+                "bounds_states": [BinarySearch.get_success(), BinarySearch.get_success(), BinarySearch.get_success()]
             },
             {
                 "name": "odd array enough tries with fail",
@@ -55,17 +55,17 @@ class TestBinarySearchStep(unittest.TestCase):
                 "init_pointers": [0, 4],
                 "init_state": BinarySearch.get_search(),
                 "bounds_pointers": [[0, 1], [0, 1], [0, 1], [0, 1]],
-                "bounds_states": [BinarySearch.get_search(), BinarySearch.get_fail(), BinarySearch.get_fail(), BinarySearch.get_fail()]
+                "bounds_states": [BinarySearch.get_fail(), BinarySearch.get_fail(), BinarySearch.get_fail(), BinarySearch.get_fail()]
             },
             {
                 "name": "even array not enough tries",
                 "array": [1, 2, 3, 4, 5, 6],
                 "target": 4,
-                "tries": 2,
+                "tries": 1,
                 "init_pointers": [0, 5],
                 "init_state": BinarySearch.get_search(),
-                "bounds_pointers": [[3, 5], [3, 3]],
-                "bounds_states": [BinarySearch.get_search(), BinarySearch.get_search()]
+                "bounds_pointers": [[3, 5]],
+                "bounds_states": [BinarySearch.get_search()]
             },
             {
                 "name": "even array enough tries",
@@ -75,7 +75,7 @@ class TestBinarySearchStep(unittest.TestCase):
                 "init_pointers": [0, 5],
                 "init_state": BinarySearch.get_search(),
                 "bounds_pointers": [[3, 5], [3, 3], [3, 3], [3, 3]],
-                "bounds_states": [BinarySearch.get_search(), BinarySearch.get_search(), BinarySearch.get_success(), BinarySearch.get_success()]
+                "bounds_states": [BinarySearch.get_search(), BinarySearch.get_success(), BinarySearch.get_success(), BinarySearch.get_success()]
             },
             {
                 "name": "even array enough tries with fail",
@@ -85,7 +85,7 @@ class TestBinarySearchStep(unittest.TestCase):
                 "init_pointers": [0, 5],
                 "init_state": BinarySearch.get_search(),
                 "bounds_pointers": [[0, 1], [0, 1], [0, 1], [0, 1]],
-                "bounds_states": [BinarySearch.get_search(), BinarySearch.get_fail(), BinarySearch.get_fail(), BinarySearch.get_fail()]
+                "bounds_states": [BinarySearch.get_fail(), BinarySearch.get_fail(), BinarySearch.get_fail(), BinarySearch.get_fail()]
             },
         ]
 
@@ -127,6 +127,16 @@ class TestBinarySearchStep(unittest.TestCase):
                             f"Получено:  {state_now}"
                         )
                     )
+
+                    if state_now == setup_binary_search.get_success():
+                        self.assertEqual(
+                            setup_binary_search.GetResult(), 1,
+                            msg=(
+                                f"FAIL: Неверный результат.\n"
+                                f"Ожидалось: {1}\n"
+                                f"Получено:  {setup_binary_search.GetResult()}"
+                            )
+                        )
                     
                     self.assertEqual(
                         [setup_binary_search.Left, setup_binary_search.Right], case["bounds_pointers"][i],
