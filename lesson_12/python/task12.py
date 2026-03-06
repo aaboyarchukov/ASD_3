@@ -83,7 +83,7 @@ class BinarySearch:
     def __get_galloping_search_result(self):
         return self.__result_to_boolean[self.__states_to_result[self.__step_state]]
     
-    # mem = O(1), t = O(log(i))
+    # mem = O(1), t = O(n*log(i))
     def GallopingSearch(self, array, n) -> bool:
         size = len(array)
         if size == 0:
