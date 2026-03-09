@@ -116,3 +116,34 @@ class BinarySearch:
             setup_binary_search.Step(n)
         
         return setup_binary_search.__step_state == BinarySearch.__SUCCESS
+
+def GallopingSearch(array, n) -> bool:
+    size = len(array)
+    if size == 0:
+        return False
+    
+    init_ind = 1
+    target_ind = BinarySearch.build_target_index(init_ind)
+    target = array[target_ind]
+
+    while target < n:
+        init_ind += 1
+        target_ind = BinarySearch.build_target_index(init_ind)
+        
+        if target_ind >= size:
+            target_ind = size - 1
+            break
+
+        target = array[target_ind]
+        
+    if target == n:
+        return True
+
+    setup_binary_search = BinarySearch(array)
+    lower_bound, upper_bound = BinarySearch.build_previous_target_index(init_ind), target_ind
+    setup_binary_search.Left, setup_binary_search.Right = lower_bound, upper_bound
+
+    while setup_binary_search.__step_state == BinarySearch.__SEARCH:
+        setup_binary_search.Step(n)
+    
+    return setup_binary_search.__step_state == BinarySearch.__SUCCESS
