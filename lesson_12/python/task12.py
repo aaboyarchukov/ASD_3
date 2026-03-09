@@ -101,7 +101,7 @@ class BinarySearch:
                 target_ind = size - 1
                 break
 
-        target = array[target_ind]
+            target = array[target_ind]
             
         if target == n:
             return True

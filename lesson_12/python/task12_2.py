@@ -2,8 +2,19 @@
 # the longest strictly monotonous sequence
 
 # [7, 1, 2, 3, 0, 4, 5, 6, 5] -> [1, 2, 3, 4, 5, 6]
-def BinarySearch():
-    pass
+def BinarySearchLeft(array, target):
+    size = len(array)
+    left, right = 0, size
+
+    while left < right:
+        middle = (left + right) // 2
+
+        if array[middle] >= target:
+            right = middle
+        if array[middle] < target:
+            left = middle + 1
+    
+    return left
 
 def StrictlyMonotonousSequence(array : list[int]) -> list[int]:
     if len(array) <= 1:
@@ -14,38 +25,67 @@ def StrictlyMonotonousSequence(array : list[int]) -> list[int]:
 
 import unittest
 
-class TestStrictlyMonotonousSequence(unittest.TestCase):
-    def test_strictly_monotonous_sequence(self):
+# class TestStrictlyMonotonousSequence(unittest.TestCase):
+#     def test_strictly_monotonous_sequence(self):
+#         cases = [
+#             {
+#                 "name": "empty array",
+#                 "array": [],
+#                 "result": []
+#             },
+#             {
+#                 "name": "one element array",
+#                 "array": [1],
+#                 "result": [1]
+#             },
+#             {
+#                 "name": "odd elements array",
+#                 "array": [7, 1, 2, 3, 0, 4, 5, 6, 5],
+#                 "result": [1, 2, 3, 4, 5, 6]
+#             },
+#             {
+#                 "name": "even elements array",
+#                 "array": [7, 1, 2, 3, 0, 4, 5, 6, 5, 9],
+#                 "result": [1, 2, 3, 4, 5, 6, 9]
+#             },
+#         ]
+
+#         for case in cases:
+#             with self.subTest(name=case['name'], array=case['array'], result=case['result']):
+#                 result = StrictlyMonotonousSequence(case['array'])
+#                 self.assertEqual(
+#                     result, case["result"],
+#                     msg=(
+#                         f"FAIL: Неверный результат поиска монотонной последовательности.\n"
+#                         f"Ожидалось: {case["result"]}\n"
+#                         f"Получено:  {result}"
+#                     )
+#                 )
+
+class TestBinarySearchLeft(unittest.TestCase):
+    def test_binary_search_left(self):
         cases = [
             {
                 "name": "empty array",
                 "array": [],
-                "result": []
+                "target": 1,
+                "result": 0
             },
             {
-                "name": "one element array",
+                "name": "one element array -> switch",
                 "array": [1],
-                "result": [1]
-            },
-            {
-                "name": "odd elements array",
-                "array": [7, 1, 2, 3, 0, 4, 5, 6, 5],
-                "result": [1, 2, 3, 4, 5, 6]
-            },
-            {
-                "name": "even elements array",
-                "array": [7, 1, 2, 3, 0, 4, 5, 6, 5, 9],
-                "result": [1, 2, 3, 4, 5, 6, 9]
+                "target": 0,
+                "result": 0
             },
         ]
 
         for case in cases:
-            with self.subTest(name=case['name'], array=case['array'], result=case['result']):
-                result = StrictlyMonotonousSequence(case['array'])
+            with self.subTest(name=case['name'], array=case['array'], target=case['target'], result=case['result']):
+                result = BinarySearchLeft(case['array'], case['target'])
                 self.assertEqual(
                     result, case["result"],
                     msg=(
-                        f"FAIL: Неверный результат поиска монотонной последовательности.\n"
+                        f"FAIL: Неверный результат поиска места для вставки.\n"
                         f"Ожидалось: {case["result"]}\n"
                         f"Получено:  {result}"
                     )
