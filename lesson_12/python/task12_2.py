@@ -77,6 +77,12 @@ class TestBinarySearchLeft(unittest.TestCase):
                 "target": 0,
                 "result": 0
             },
+            {
+                "name": "one element array -> append",
+                "array": [1],
+                "target": 2,
+                "result": 1
+            },
         ]
 
         for case in cases:
