@@ -1,6 +1,9 @@
 import unittest
 from task12 import BinarySearch
 
+def setup(array):
+    return BinarySearch(sorted(array))
+
 class TestGallopingSearch(unittest.TestCase):
     def test_galloping_search(self):
         cases = [
@@ -50,7 +53,8 @@ class TestGallopingSearch(unittest.TestCase):
 
         for case in cases:
             with self.subTest(name=case["name"], init_array=case["array"], target_element=case["target"]):
-                is_find = BinarySearch.GallopingSearch(case["array"], case["target"])
+                setup_binary_search = setup(case["array"])
+                is_find = setup_binary_search.GallopingSearch(case["array"], case["target"])
 
                 self.assertEqual(
                     is_find, case["result"],

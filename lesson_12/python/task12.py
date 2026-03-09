@@ -86,8 +86,7 @@ class BinarySearch:
         return self.__result_to_boolean[self.__states_to_result[self.__step_state]]
     
     # mem = O(1), t = O(n*log(i))
-    @staticmethod
-    def GallopingSearch(array, n) -> bool:
+    def GallopingSearch(self, array, n) -> bool:
         size = len(array)
         if size == 0:
             return False
@@ -115,7 +114,7 @@ class BinarySearch:
 
         while setup_binary_search.__step_state == BinarySearch.__SEARCH:
             setup_binary_search.Step(n)
-            
+
         if setup_binary_search.__step_state == BinarySearch.__SEARCH:
             return False
         
