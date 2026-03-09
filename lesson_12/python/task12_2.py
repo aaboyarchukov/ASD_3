@@ -17,14 +17,29 @@ def BinarySearchLeft(array, target):
     return left
 
 def StrictlyMonotonousSequence(array : list[int]) -> list[int]:
-    if len(array) <= 1:
+    size = len(array)
+    if size <= 1:
         return array
     
     collection = []
     parents = []
-    result = []
+    result = [-1] * size
 
     for indx in range(len(array)):
+        target = array[indx]
+        target_pos = BinarySearchLeft(collection, target)
+
+        if target_pos == len(collection):
+            collection.append(target)
+        else:
+            collection[indx] = target
+        
+        if target_pos > 0:
+            parents[target_pos] = collection[target_pos-1]
+        else:
+            parents[target_pos] = -1
+    
+    for indx in range(len(collection)):
         pass
     
     return result
