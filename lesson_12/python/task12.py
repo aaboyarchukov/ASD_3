@@ -114,8 +114,5 @@ class BinarySearch:
 
         while setup_binary_search.__step_state == BinarySearch.__SEARCH:
             setup_binary_search.Step(n)
-
-        if setup_binary_search.__step_state == BinarySearch.__SEARCH:
-            return False
         
         return setup_binary_search.__step_state == BinarySearch.__SUCCESS
