@@ -83,6 +83,18 @@ class TestBinarySearchLeft(unittest.TestCase):
                 "target": 2,
                 "result": 1
             },
+            {
+                "name": "even elements array -> switch",
+                "array": [1, 2, 4, 5],
+                "target": 3,
+                "result": 2
+            },
+            {
+                "name": "even elements array -> append",
+                "array": [1, 2, 4, 5],
+                "target": 6,
+                "result": 4
+            },
         ]
 
         for case in cases:
