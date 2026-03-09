@@ -143,7 +143,7 @@ def GallopingSearch(array, n) -> bool:
     lower_bound, upper_bound = BinarySearch.build_previous_target_index(init_ind), target_ind
     setup_binary_search.Left, setup_binary_search.Right = lower_bound, upper_bound
 
-    while setup_binary_search.__step_state == BinarySearch.__SEARCH:
+    while setup_binary_search.GetState() == BinarySearch.get_search():
         setup_binary_search.Step(n)
     
-    return setup_binary_search.__step_state == BinarySearch.__SUCCESS
+    return setup_binary_search.GetState() == BinarySearch.get_success()
