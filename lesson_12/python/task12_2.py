@@ -22,8 +22,7 @@ def StrictlyMonotonousSequence(array : list[int]) -> list[int]:
         return array
     
     collection = []
-    parents = []
-    result = [-1] * size
+    parents = [-1] * size
 
     for indx in range(len(array)):
         target = array[indx]
@@ -32,16 +31,22 @@ def StrictlyMonotonousSequence(array : list[int]) -> list[int]:
         if target_pos == len(collection):
             collection.append(target)
         else:
-            collection[indx] = target
+            collection[target_pos] = target
         
         if target_pos > 0:
             parents[target_pos] = collection[target_pos-1]
         else:
             parents[target_pos] = -1
     
-    for indx in range(len(collection)):
-        pass
+    result = []
+    result.append(collection[len(collection) - 1])
+
+    indx = len(collection) - 1
+    while parents[indx] != -1:
+        result.append(parents[indx])
+        indx -= 1
     
+    result.reverse()
     return result
 
 
@@ -60,16 +65,16 @@ class TestStrictlyMonotonousSequence(unittest.TestCase):
                 "array": [1],
                 "result": [1]
             },
-            # {
-            #     "name": "odd elements array",
-            #     "array": [7, 1, 2, 3, 0, 4, 5, 6, 5],
-            #     "result": [1, 2, 3, 4, 5, 6]
-            # },
-            # {
-            #     "name": "even elements array",
-            #     "array": [7, 1, 2, 3, 0, 4, 5, 6, 5, 9],
-            #     "result": [1, 2, 3, 4, 5, 6, 9]
-            # },
+            {
+                "name": "odd elements array",
+                "array": [7, 1, 2, 3, 0, 4, 5, 6, 5],
+                "result": [1, 2, 3, 4, 5, 6]
+            },
+            {
+                "name": "even elements array",
+                "array": [7, 1, 2, 3, 0, 4, 5, 6, 5, 9],
+                "result": [1, 2, 3, 4, 5, 6, 9]
+            },
         ]
 
         for case in cases:
