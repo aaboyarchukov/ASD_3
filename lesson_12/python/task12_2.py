@@ -95,6 +95,18 @@ class TestBinarySearchLeft(unittest.TestCase):
                 "target": 6,
                 "result": 4
             },
+            {
+                "name": "odd elements array -> switch",
+                "array": [1, 2, 4, 5, 6],
+                "target": 3,
+                "result": 2
+            },
+            {
+                "name": "odd elements array -> append",
+                "array": [1, 2, 4, 5, 6],
+                "target": 7,
+                "result": 5
+            },
         ]
 
         for case in cases:
